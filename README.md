@@ -1,4 +1,4 @@
-# Characcter Counter extension
+# Character Counter extension
 
 ## Summary
 
