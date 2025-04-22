@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from '@assets/img/logo.svg';
 import { Header, Input, SavedList } from '@pages/popup/components';
 import { Stack } from '@mui/material';
 
