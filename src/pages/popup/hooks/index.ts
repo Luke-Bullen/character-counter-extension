@@ -1,0 +1,1 @@
+export { default as useCharacterCount } from './useCharacterCount'
