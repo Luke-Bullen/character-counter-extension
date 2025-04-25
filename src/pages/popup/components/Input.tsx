@@ -1,11 +1,12 @@
 import { Stack, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
-import { useCharacterCount } from '../hooks'
+import { useByteCount, useCharacterCount } from '../hooks'
 
 const Input = () => {
   const [inputValue, setInputValue] = useState('')
 
   const inputCharacterCountValue = useCharacterCount(inputValue)
+  const inputByteCountValue = useByteCount(inputValue)
 
   return (
     <>
@@ -26,9 +27,11 @@ const Input = () => {
         >
           <Stack direction='column' alignItems='flex-end'>
             <Typography variant='body1'>
-              Characters: ${inputCharacterCountValue}
+              Characters: {inputCharacterCountValue}
             </Typography>
-            <Typography variant='body1'>Bytes: </Typography>
+            <Typography variant='body1'>
+              Bytes: {inputByteCountValue}
+            </Typography>
           </Stack>
         </Stack>
       </Stack>
