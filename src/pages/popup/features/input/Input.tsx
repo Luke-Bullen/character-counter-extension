@@ -1,6 +1,8 @@
 import { Stack, TextField, Typography } from '@mui/material';
 import { FC, useState } from 'react';
-import { useByteCount, useCharacterCount } from '../hooks';
+import useCharacterCount from './useCharacterCount';
+import useByteCount from './useByteCount';
+import { CopyButton } from '../shared';
 
 const InputValues: FC<{ inputValue: string }> = ({ inputValue }) => {
   const inputCharacterCountValue = useCharacterCount(inputValue);
@@ -16,10 +18,10 @@ const InputValues: FC<{ inputValue: string }> = ({ inputValue }) => {
   );
 };
 
-const Actions: FC = () => {
+const Actions: FC<{ inputValue: string }> = ({ inputValue }) => {
   return (
     <Stack direction="row">
-      <p>copy</p>
+      <CopyButton copyValue={inputValue} />
       <p>save</p>
     </Stack>
   );
@@ -46,7 +48,7 @@ const Input: FC = () => {
           alignItems="center"
         >
           <InputValues inputValue={inputValue} />
-          <Actions />
+          <Actions inputValue={inputValue} />
         </Stack>
       </Stack>
     </>
