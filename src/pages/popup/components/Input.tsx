@@ -16,6 +16,15 @@ const InputValues: FC<{ inputValue: string }> = ({ inputValue }) => {
   )
 }
 
+const Actions: FC = () => {
+  return (
+    <Stack direction='row'>
+      <p>copy</p>
+      <p>save</p>
+    </Stack>
+  )
+}
+
 const Input: FC = () => {
   const [inputValue, setInputValue] = useState('')
 
@@ -37,6 +46,7 @@ const Input: FC = () => {
           alignItems='center'
         >
           <InputValues inputValue={inputValue} />
+          <Actions />
         </Stack>
       </Stack>
     </>
