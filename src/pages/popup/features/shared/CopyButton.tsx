@@ -13,7 +13,7 @@ const CopyButton: FC<{ copyValue: string }> = ({ copyValue }) => {
   }, [copyValue]);
 
   return (
-    <Tooltip title="Copy">
+    <Tooltip title='Copy'>
       <IconButton onClick={handleCopy}>
         <ContentCopyRounded />
       </IconButton>
