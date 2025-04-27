@@ -4,8 +4,26 @@ import { FC, ReactElement } from 'react';
 const Tooltip: FC<{ title: string; children: ReactElement }> = ({
   title,
   children,
-}) => {
-  return <MUITooltip title={title}>{children}</MUITooltip>;
-};
+}) => (
+  <MUITooltip
+    title={title}
+    arrow
+    enterDelay={1000}
+    slotProps={{
+      popper: {
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [0, -8],
+            },
+          },
+        ],
+      },
+    }}
+  >
+    {children}
+  </MUITooltip>
+);
 
 export default Tooltip;
