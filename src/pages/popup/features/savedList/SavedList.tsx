@@ -1,12 +1,14 @@
 import { Stack } from '@mui/material';
+import { FC } from 'react';
+import SavedListItem from './SavedListItem';
 
-const SavedList = () => {
+const SavedList: FC = () => {
   const tempOrderArray = ['1', '2', '3'];
 
   return (
     <Stack direction='column'>
-      {tempOrderArray.map((key) => {
-        return <div key={key}>{key}</div>;
+      {tempOrderArray.map((id) => {
+        return <SavedListItem key={id} id={id} />;
       })}
     </Stack>
   );
