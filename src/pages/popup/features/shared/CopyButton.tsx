@@ -3,7 +3,10 @@ import { ContentCopyRounded } from '@mui/icons-material';
 import { FC, useCallback } from 'react';
 import Tooltip from './Tooltip';
 
-const CopyButton: FC<{ copyValue: string }> = ({ copyValue }) => {
+const CopyButton: FC<{ copyValue: string; title: string }> = ({
+  copyValue,
+  title = 'Copy',
+}) => {
   const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(copyValue);
@@ -13,7 +16,7 @@ const CopyButton: FC<{ copyValue: string }> = ({ copyValue }) => {
   }, [copyValue]);
 
   return (
-    <Tooltip title='Copy'>
+    <Tooltip title={title}>
       <IconButton onClick={handleCopy}>
         <ContentCopyRounded />
       </IconButton>
