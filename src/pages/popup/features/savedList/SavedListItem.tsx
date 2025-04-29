@@ -26,9 +26,15 @@ const SavedListItem: FC<{ id: string }> = ({ id }) => {
         </Stack>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography variant='body1' noWrap>
-          {id}
-        </Typography>
+        <Stack direction='column' alignItems='center' spacing={1}>
+          <Typography variant='body1' noWrap>
+            {id}
+          </Typography>
+          <Stack direction='column' alignItems='flex-end'>
+            <Typography variant='body1'>charcters: </Typography>
+            <Typography variant='body1'>bytes: </Typography>
+          </Stack>
+        </Stack>
       </AccordionDetails>
     </Accordion>
   );
