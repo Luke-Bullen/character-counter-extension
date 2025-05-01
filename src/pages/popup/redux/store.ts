@@ -20,6 +20,7 @@ setup();
 store.subscribe(async () => {
   const state = store.getState().list;
 
-  const order = state.listOrder;
-  await browser.storage.local.set({ order: order });
+  await browser.storage.local.set({ order: state.listOrder });
+
+  await browser.storage.local.set(state.savedEntries);
 });
