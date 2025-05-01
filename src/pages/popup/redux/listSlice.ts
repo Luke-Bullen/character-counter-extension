@@ -32,6 +32,13 @@ const listSlice = createSlice({
     ) => {
       state.savedEntries = action.payload;
     },
+    addItem: (
+      state,
+      action: PayloadAction<{ key: string; value: ValueObjType }>,
+    ) => {
+      state.listOrder.push(action.payload.key);
+      state.savedEntries[action.payload.key] = action.payload.value;
+    },
   },
 });
 
