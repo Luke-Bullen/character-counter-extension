@@ -3,7 +3,7 @@ import { ContentCopyRounded } from '@mui/icons-material';
 import { FC, useCallback } from 'react';
 import Tooltip from './Tooltip';
 
-const CopyButton: FC<{ copyValue: string; title: string }> = ({
+const CopyButton: FC<{ copyValue: string; title?: string }> = ({
   copyValue,
   title = 'Copy',
 }) => {
