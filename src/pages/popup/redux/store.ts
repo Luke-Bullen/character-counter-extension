@@ -17,6 +17,9 @@ const setup = async () => {
 
 setup();
 
-store.subscribe(() => {
-  console.log('store sub', store.getState().list);
+store.subscribe(async () => {
+  const state = store.getState().list;
+
+  const order = state.listOrder;
+  await browser.storage.local.set({ order: order });
 });
