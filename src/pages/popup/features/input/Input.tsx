@@ -10,21 +10,26 @@ const InputValues: FC<{ inputValue: string }> = ({ inputValue }) => {
   const inputByteCountValue = useByteCount(inputValue);
 
   return (
-    <Stack direction="column" alignItems="flex-end">
-      <Typography variant="body1">
+    <Stack direction='column' alignItems='flex-end'>
+      <Typography variant='body1'>
         Characters: {inputCharacterCountValue}
       </Typography>
-      <Typography variant="body1">Bytes: {inputByteCountValue}</Typography>
+      <Typography variant='body1'>Bytes: {inputByteCountValue}</Typography>
     </Stack>
   );
 };
 
-const Actions: FC<{ inputValue: string }> = ({ inputValue }) => {
+const Actions: FC<{
+  inputValue: string;
+  isSaving: boolean;
+  setIsSaving: (isSaving: boolean) => void;
+}> = ({ inputValue, isSaving, setIsSaving }) => {
   const handleSave = () => {
-    console.log('save clicked');
+    setIsSaving(!isSaving);
   };
+
   return (
-    <Stack direction="row">
+    <Stack direction='row'>
       <CopyButton copyValue={inputValue} />
       <IconButton onClick={handleSave}>
         <SaveRounded />
@@ -35,13 +40,13 @@ const Actions: FC<{ inputValue: string }> = ({ inputValue }) => {
 
 const Input: FC = () => {
   const [inputValue, setInputValue] = useState('');
-  const [saving, setSaving] = useState(false)
+  const [isSaving, setIsSaving] = useState(false);
 
   return (
     <>
       <Stack>
         <TextField
-          variant="outlined"
+          variant='outlined'
           multiline
           maxRows={4}
           sx={{ background: 'white', width: '95%' }}
@@ -50,13 +55,17 @@ const Input: FC = () => {
           slotProps={{ htmlInput: { maxLength: 5000 } }}
         />
         <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
+          direction='row'
+          justifyContent='space-between'
+          alignItems='center'
         >
           <InputValues inputValue={inputValue} />
-          <Actions inputValue={inputValue} />
-          {saving && <p>set alias</p>}
+          <Actions
+            inputValue={inputValue}
+            isSaving={isSaving}
+            setIsSaving={setIsSaving}
+          />
+          {isSaving && <p>set alias</p>}
         </Stack>
       </Stack>
     </>
