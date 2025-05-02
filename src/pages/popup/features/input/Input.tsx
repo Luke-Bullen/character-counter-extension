@@ -1,8 +1,9 @@
-import { Stack, TextField, Typography } from '@mui/material';
+import { IconButton, Stack, TextField, Typography } from '@mui/material';
 import { FC, useState } from 'react';
 import useCharacterCount from './useCharacterCount';
 import useByteCount from './useByteCount';
 import { CopyButton } from '../shared';
+import { SaveRounded } from '@mui/icons-material';
 
 const InputValues: FC<{ inputValue: string }> = ({ inputValue }) => {
   const inputCharacterCountValue = useCharacterCount(inputValue);
@@ -19,16 +20,22 @@ const InputValues: FC<{ inputValue: string }> = ({ inputValue }) => {
 };
 
 const Actions: FC<{ inputValue: string }> = ({ inputValue }) => {
+  const handleSave = () => {
+    console.log('save clicked');
+  };
   return (
     <Stack direction="row">
       <CopyButton copyValue={inputValue} />
-      <p>save</p>
+      <IconButton onClick={handleSave}>
+        <SaveRounded />
+      </IconButton>
     </Stack>
   );
 };
 
 const Input: FC = () => {
   const [inputValue, setInputValue] = useState('');
+  const [saving, setSaving] = useState(false)
 
   return (
     <>
@@ -49,6 +56,7 @@ const Input: FC = () => {
         >
           <InputValues inputValue={inputValue} />
           <Actions inputValue={inputValue} />
+          {saving && <p>set alias</p>}
         </Stack>
       </Stack>
     </>
