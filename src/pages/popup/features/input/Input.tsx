@@ -2,7 +2,7 @@ import { IconButton, Stack, TextField, Typography } from '@mui/material';
 import { FC, useState } from 'react';
 import useCharacterCount from './useCharacterCount';
 import useByteCount from './useByteCount';
-import { CopyButton } from '../shared';
+import { CopyButton, Tooltip } from '../shared';
 import { SaveRounded } from '@mui/icons-material';
 
 const InputValues: FC<{ inputValue: string }> = ({ inputValue }) => {
@@ -28,12 +28,18 @@ const Actions: FC<{
     setIsSaving(!isSaving);
   };
 
-  return (
-    <Stack direction='row'>
-      <CopyButton copyValue={inputValue} />
+  const SaveButton = () => (
+    <Tooltip title='Save'>
       <IconButton onClick={handleSave}>
         <SaveRounded />
       </IconButton>
+    </Tooltip>
+  );
+
+  return (
+    <Stack direction='row'>
+      <CopyButton copyValue={inputValue} />
+      <SaveButton />
     </Stack>
   );
 };
