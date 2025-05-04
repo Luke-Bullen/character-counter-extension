@@ -44,6 +44,22 @@ const Actions: FC<{
   );
 };
 
+const Alias: FC<{ defaultValue: string }> = ({ defaultValue }) => {
+  return (
+    <Stack direction='row'>
+      <TextField
+        multiline
+        maxRows={4}
+        sx={{ background: 'white', width: '95%' }}
+        defaultValue={defaultValue}
+        // value={inputValue}
+        // onChange={(e) => setInputValue(e.target.value)}
+        slotProps={{ htmlInput: { maxLength: 5000 } }}
+      />
+    </Stack>
+  );
+};
+
 const Input: FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [isSaving, setIsSaving] = useState(false);
@@ -52,7 +68,6 @@ const Input: FC = () => {
     <>
       <Stack direction='column' alignItems='center'>
         <TextField
-          variant='outlined'
           multiline
           maxRows={4}
           sx={{ background: 'white', width: '95%' }}
@@ -73,17 +88,7 @@ const Input: FC = () => {
             setIsSaving={setIsSaving}
           />
         </Stack>
-        {isSaving && (
-          <TextField
-            variant='outlined'
-            multiline
-            maxRows={4}
-            sx={{ background: 'white', width: '95%' }}
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            slotProps={{ htmlInput: { maxLength: 5000 } }}
-          />
-        )}
+        {isSaving && <Alias defaultValue={inputValue} />}
       </Stack>
     </>
   );
