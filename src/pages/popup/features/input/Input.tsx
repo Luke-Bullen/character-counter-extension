@@ -50,7 +50,7 @@ const Input: FC = () => {
 
   return (
     <>
-      <Stack>
+      <Stack direction='column' alignItems='center'>
         <TextField
           variant='outlined'
           multiline
