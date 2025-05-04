@@ -71,7 +71,17 @@ const Input: FC = () => {
             isSaving={isSaving}
             setIsSaving={setIsSaving}
           />
-          {isSaving && <p>set alias</p>}
+          {isSaving && (
+            <TextField
+              variant='outlined'
+              multiline
+              maxRows={4}
+              sx={{ background: 'white', width: '95%' }}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              slotProps={{ htmlInput: { maxLength: 5000 } }}
+            />
+          )}
         </Stack>
       </Stack>
     </>
