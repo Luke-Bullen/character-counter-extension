@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import useCharacterCount from './useCharacterCount';
 import useByteCount from './useByteCount';
 import { CopyButton, Tooltip } from '../shared';
-import { Cancel, SaveRounded } from '@mui/icons-material';
+import { Cancel, SaveAsRounded, SaveRounded } from '@mui/icons-material';
 
 const InputValues: FC<{ inputValue: string }> = ({ inputValue }) => {
   const inputCharacterCountValue = useCharacterCount(inputValue);
@@ -29,9 +29,9 @@ const Actions: FC<{
   };
 
   const SaveButton = () => (
-    <Tooltip title='Save'>
+    <Tooltip title='Save as'>
       <IconButton onClick={handleSave}>
-        {isSaving ? <Cancel /> : <SaveRounded />}
+        {isSaving ? <Cancel /> : <SaveAsRounded />}
       </IconButton>
     </Tooltip>
   );
@@ -45,17 +45,23 @@ const Actions: FC<{
 };
 
 const Alias: FC<{ defaultValue: string }> = ({ defaultValue }) => {
+  const handleSave = () => {};
   return (
-    <Stack direction='row'>
+    <Stack direction='row' alignItems='center' justifyContent='center' p='1rem'>
       <TextField
+        label='Alias'
         multiline
         maxRows={4}
-        sx={{ background: 'white', width: '95%' }}
         defaultValue={defaultValue}
         // value={inputValue}
         // onChange={(e) => setInputValue(e.target.value)}
         slotProps={{ htmlInput: { maxLength: 5000 } }}
       />
+      <Tooltip title='Save'>
+        <IconButton onClick={handleSave} size='medium'>
+          <SaveRounded />
+        </IconButton>
+      </Tooltip>
     </Stack>
   );
 };
@@ -70,7 +76,7 @@ const Input: FC = () => {
         <TextField
           multiline
           maxRows={4}
-          sx={{ background: 'white', width: '95%' }}
+          sx={{ width: '95%' }}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           slotProps={{ htmlInput: { maxLength: 5000 } }}
