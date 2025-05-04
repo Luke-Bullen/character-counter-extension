@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import useCharacterCount from './useCharacterCount';
 import useByteCount from './useByteCount';
 import { CopyButton, Tooltip } from '../shared';
-import { SaveRounded } from '@mui/icons-material';
+import { Cancel, SaveRounded } from '@mui/icons-material';
 
 const InputValues: FC<{ inputValue: string }> = ({ inputValue }) => {
   const inputCharacterCountValue = useCharacterCount(inputValue);
@@ -31,7 +31,7 @@ const Actions: FC<{
   const SaveButton = () => (
     <Tooltip title='Save'>
       <IconButton onClick={handleSave}>
-        <SaveRounded />
+        {isSaving ? <Cancel /> : <SaveRounded />}
       </IconButton>
     </Tooltip>
   );
@@ -64,6 +64,7 @@ const Input: FC = () => {
           direction='row'
           justifyContent='space-between'
           alignItems='center'
+          width='100%'
         >
           <InputValues inputValue={inputValue} />
           <Actions
