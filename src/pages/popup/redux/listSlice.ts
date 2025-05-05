@@ -42,5 +42,5 @@ const listSlice = createSlice({
   },
 });
 
-export const { setOrder, setSavedEntries } = listSlice.actions;
+export const { setOrder, setSavedEntries, addItem } = listSlice.actions;
 export default listSlice.reducer;

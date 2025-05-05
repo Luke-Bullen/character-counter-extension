@@ -24,3 +24,5 @@ store.subscribe(async () => {
 
   await browser.storage.local.set(state.savedEntries);
 });
+
+export default store;
