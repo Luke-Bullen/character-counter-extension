@@ -45,17 +45,20 @@ const Actions: FC<{
 };
 
 const Alias: FC<{ defaultValue: string }> = ({ defaultValue }) => {
+  const [aliasValue, setAliasValue] = useState(defaultValue);
+
   const handleSave = () => {};
   return (
     <Stack direction='row' alignItems='center' justifyContent='center' p='1rem'>
       <TextField
         label='Alias'
+        placeholder='Enter alias here ...'
         multiline
         maxRows={4}
         defaultValue={defaultValue}
-        // value={inputValue}
-        // onChange={(e) => setInputValue(e.target.value)}
-        slotProps={{ htmlInput: { maxLength: 5000 } }}
+        value={aliasValue}
+        onChange={(e) => setAliasValue(e.target.value)}
+        slotProps={{ htmlInput: { maxLength: 25 } }}
       />
       <Tooltip title='Save'>
         <IconButton onClick={handleSave} size='medium'>
