@@ -107,6 +107,9 @@ const Input: FC = () => {
       console.log('saved', id, valueObject);
 
       store.dispatch(addItem({ key: id, value: valueObject }));
+
+      setIsSaving(false);
+      setInputValue('');
     } catch (error) {
       console.error(error);
     }
