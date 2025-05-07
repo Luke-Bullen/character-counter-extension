@@ -5,8 +5,6 @@ import { EntityObjectType } from '../shared';
 import { store } from '../../redux';
 
 const SavedList: FC = () => {
-  const tempOrderArray = ['1', '2', '3'];
-
   const [orderArray, setOrderArray] = useState<string[]>([]);
   const [allSavedEntriesObject, setAllSavedEntriesObject] = useState<
     Record<string, EntityObjectType>
@@ -24,15 +22,18 @@ const SavedList: FC = () => {
   }, []);
   store.subscribe(getAllSavedEntries);
 
-  console.log(orderArray);
-  console.log(allSavedEntriesObject);
-
   return (
     <>
       {orderArray.length ? (
         <Stack direction='column'>
-          {tempOrderArray.map((id) => {
-            return <SavedListItem key={id} id={id} />;
+          {orderArray.map((id) => {
+            return (
+              <SavedListItem
+                key={id}
+                id={id}
+                entityProperties={allSavedEntriesObject[id]}
+              />
+            );
           })}
         </Stack>
       ) : (
