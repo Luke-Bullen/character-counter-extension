@@ -47,7 +47,7 @@ const Alias: FC<{
   defaultValue: string;
   handleSave: (value: string) => void;
 }> = ({ defaultValue, handleSave }) => {
-  const [aliasValue, setAliasValue] = useState(defaultValue);
+  const [aliasValue, setAliasValue] = useState<string>(defaultValue);
 
   return (
     <Stack direction='row' alignItems='center' justifyContent='center' p='1rem'>
@@ -87,8 +87,8 @@ const generateUniqueId = async (attempt: number = 0): Promise<string> => {
 };
 
 const Input: FC = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [isSaving, setIsSaving] = useState(false);
+  const [inputValue, setInputValue] = useState<string>('');
+  const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const inputCharacterCountValue = useCharacterCount(inputValue);
   const inputByteCountValue = useByteCount(inputValue);
