@@ -3,7 +3,7 @@ import { IconButton, Stack, TextField, Typography } from '@mui/material';
 import { FC, useState } from 'react';
 import useCharacterCount from './useCharacterCount';
 import useByteCount from './useByteCount';
-import { CopyButton, Tooltip } from '../shared';
+import { CopyButton, Tooltip, EntityObjectType } from '../shared';
 import { Cancel, SaveAsRounded, SaveRounded } from '@mui/icons-material';
 import { v4 as uuidv4 } from 'uuid';
 import { store, addItem } from '../../redux';
@@ -70,13 +70,6 @@ const Alias: FC<{
   );
 };
 
-type ValueObjectType = {
-  alias: string;
-  value: string;
-  characterCount: number;
-  byteCount: number;
-};
-
 const generateUniqueId = async (attempt: number = 0): Promise<string> => {
   if (attempt >= 5) console.error('Unable to generate unique id');
 
@@ -95,7 +88,7 @@ const Input: FC = () => {
 
   const handleSave = async (alias: string) => {
     try {
-      const valueObject: ValueObjectType = {
+      const valueObject: EntityObjectType = {
         alias: alias,
         value: inputValue,
         characterCount: inputCharacterCountValue,

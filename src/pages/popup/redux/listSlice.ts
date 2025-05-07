@@ -1,15 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-type ValueObjType = {
-  alias: string;
-  value: string;
-  characterCount: number;
-  byteCount: number;
-};
+import { EntityObjectType } from '../features/shared';
 
 type ListType = {
   listOrder: string[];
-  savedEntries: Record<string, ValueObjType>;
+  savedEntries: Record<string, EntityObjectType>;
   deleteKey: string;
 };
 
@@ -28,13 +22,13 @@ const listSlice = createSlice({
     },
     setSavedEntries: (
       state,
-      action: PayloadAction<Record<string, ValueObjType>>,
+      action: PayloadAction<Record<string, EntityObjectType>>,
     ) => {
       state.savedEntries = action.payload;
     },
     addItem: (
       state,
-      action: PayloadAction<{ key: string; value: ValueObjType }>,
+      action: PayloadAction<{ key: string; value: EntityObjectType }>,
     ) => {
       state.listOrder.push(action.payload.key);
       state.savedEntries[action.payload.key] = action.payload.value;
