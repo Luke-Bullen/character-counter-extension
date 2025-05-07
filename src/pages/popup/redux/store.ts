@@ -18,11 +18,11 @@ const setup = async () => {
 setup();
 
 store.subscribe(async () => {
-  const state = store.getState().list;
+  const { listOrder, savedEntries } = store.getState().list;
 
-  await browser.storage.local.set({ order: state.listOrder });
+  await browser.storage.local.set({ order: listOrder });
 
-  await browser.storage.local.set(state.savedEntries);
+  await browser.storage.local.set(savedEntries);
 });
 
 export default store;
