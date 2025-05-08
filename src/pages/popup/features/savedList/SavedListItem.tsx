@@ -40,12 +40,20 @@ const SavedListItem: FC<{ id: string; entityProperties: EntityObjectType }> = ({
       </AccordionSummary>
       <AccordionDetails>
         <Stack direction='column' alignItems='center' spacing={1}>
-          <Typography variant='body1' noWrap>
+          <Typography
+            variant='body1'
+            sx={{
+              fontWeight: 'bold',
+              width: '90%',
+              overflow: 'scroll',
+              height: '40px',
+            }}
+          >
             {value}
           </Typography>
-          <Stack direction='column' alignItems='flex-end'>
-            <Typography variant='body1'>Charcters: {characterCount}</Typography>
-            <Typography variant='body1'>Bytes: {byteCount}</Typography>
+          <Stack direction='column' alignItems='flex-start' width='100%'>
+            <Typography variant='body2'>Charcters: {characterCount}</Typography>
+            <Typography variant='body2'>Bytes: {byteCount}</Typography>
           </Stack>
         </Stack>
       </AccordionDetails>
