@@ -17,7 +17,12 @@ const CopyButton: FC<{ copyValue: string; title?: string }> = ({
 
   return (
     <Tooltip title={title}>
-      <IconButton onClick={handleCopy}>
+      <IconButton
+        onClick={(event) => {
+          event.stopPropagation();
+          handleCopy();
+        }}
+      >
         <ContentCopyRounded />
       </IconButton>
     </Tooltip>
