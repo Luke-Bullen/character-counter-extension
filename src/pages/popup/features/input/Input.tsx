@@ -28,7 +28,7 @@ const Actions: FC<{
   };
 
   const SaveButton = () => (
-    <Tooltip title='Save as'>
+    <Tooltip title={isSaving ? 'Cancel' : 'Save As'}>
       <IconButton onClick={handleSave}>
         {isSaving ? <Cancel /> : <SaveAsRounded />}
       </IconButton>
