@@ -59,7 +59,7 @@ const Alias: FC<{
     >
       <TextField
         label='Alias'
-        placeholder='Enter alias here ...'
+        placeholder='Enter alias ...'
         multiline
         maxRows={4}
         defaultValue={defaultValue}
@@ -123,6 +123,7 @@ const Input: FC = () => {
           sx={{ width: '100%' }}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          placeholder='Enter string ...'
           slotProps={{ htmlInput: { maxLength: 5000 } }}
         />
         <Stack
