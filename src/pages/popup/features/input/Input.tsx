@@ -50,7 +50,13 @@ const Alias: FC<{
   const [aliasValue, setAliasValue] = useState<string>(defaultValue);
 
   return (
-    <Stack direction='row' alignItems='center' justifyContent='center' p='1rem'>
+    <Stack
+      direction='row'
+      alignItems='center'
+      justifyContent='center'
+      p='0.5rem'
+      gap='0.5rem'
+    >
       <TextField
         label='Alias'
         placeholder='Enter alias here ...'
@@ -110,11 +116,11 @@ const Input: FC = () => {
 
   return (
     <>
-      <Stack direction='column' alignItems='center'>
+      <Stack direction='column' alignItems='center' gap='0.5rem'>
         <TextField
           multiline
           maxRows={4}
-          sx={{ width: '95%' }}
+          sx={{ width: '100%' }}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           slotProps={{ htmlInput: { maxLength: 5000 } }}
