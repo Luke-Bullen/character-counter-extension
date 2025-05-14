@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 import SavedListItem from './SavedListItem';
 import { EntityObjectType } from '../shared';
@@ -37,7 +37,9 @@ const SavedList: FC = () => {
           })}
         </Stack>
       ) : (
-        <p>There are no saved entries</p>
+        <Typography variant='body2' align='center' py='1rem'>
+          There are no saved strings
+        </Typography>
       )}
     </>
   );
