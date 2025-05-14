@@ -26,15 +26,13 @@ const SavedList: FC = () => {
     <>
       {orderArray.length ? (
         <Stack direction='column'>
-          {orderArray.map((id) => {
-            return (
-              <SavedListItem
-                key={id}
-                id={id}
-                entityProperties={allSavedEntriesObject[id]}
-              />
-            );
-          })}
+          {orderArray.map((id) => (
+            <SavedListItem
+              key={id}
+              id={id}
+              entityProperties={allSavedEntriesObject[id]}
+            />
+          ))}
         </Stack>
       ) : (
         <Typography variant='body2' align='center' py='1rem'>
