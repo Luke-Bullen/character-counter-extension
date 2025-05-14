@@ -33,8 +33,15 @@ const listSlice = createSlice({
       state.listOrder.push(action.payload.key);
       state.savedEntries[action.payload.key] = action.payload.value;
     },
+    removeItem: (state, action: PayloadAction<string>) => {
+      state.listOrder = state.listOrder.filter(
+        (item) => item !== action.payload,
+      );
+      delete state.savedEntries[action.payload];
+    },
   },
 });
 
-export const { setOrder, setSavedEntries, addItem } = listSlice.actions;
+export const { setOrder, setSavedEntries, addItem, removeItem } =
+  listSlice.actions;
 export default listSlice.reducer;

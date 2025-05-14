@@ -2,13 +2,34 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  IconButton,
   Stack,
   styled,
   Typography,
 } from '@mui/material';
-import { ExpandMore } from '@mui/icons-material';
+import { DeleteRounded, ExpandMore } from '@mui/icons-material';
 import { FC } from 'react';
-import { CopyButton, EntityObjectType } from '../shared';
+import { CopyButton, EntityObjectType, Tooltip } from '../shared';
+import { removeItem, store } from '../../redux';
+
+const DeleteButton: FC<{ id: string }> = ({ id }) => {
+  const handleDelete = () => {
+    try {
+      console.log('deleting', id);
+      store.dispatch(removeItem(id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <Tooltip title='Delete'>
+      <IconButton onClick={handleDelete}>
+        <DeleteRounded />
+      </IconButton>
+    </Tooltip>
+  );
+};
 
 const SavedListItem: FC<{ id: string; entityProperties: EntityObjectType }> = ({
   id,
@@ -49,9 +70,14 @@ const SavedListItem: FC<{ id: string; entityProperties: EntityObjectType }> = ({
       <AccordionDetails>
         <Stack direction='column' alignItems='center' spacing={1}>
           <ValueTypography variant='body1'>{value}</ValueTypography>
-          <Stack direction='column' alignItems='flex-start' width='100%'>
-            <Typography variant='body2'>Charcters: {characterCount}</Typography>
-            <Typography variant='body2'>Bytes: {byteCount}</Typography>
+          <Stack direction='row' justifyContent='space-between' width='100%'>
+            <Stack direction='column' alignItems='flex-start' width='100%'>
+              <Typography variant='body2'>
+                Charcters: {characterCount}
+              </Typography>
+              <Typography variant='body2'>Bytes: {byteCount}</Typography>
+            </Stack>
+            <DeleteButton id={id} />
           </Stack>
         </Stack>
       </AccordionDetails>

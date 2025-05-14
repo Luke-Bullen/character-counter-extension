@@ -1,2 +1,2 @@
 export { default as store } from './store';
-export { addItem } from './listSlice';
+export { addItem, removeItem } from './listSlice';
