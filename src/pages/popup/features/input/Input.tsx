@@ -21,23 +21,26 @@ const InputValues: FC<{ characterCount: number; byteCount: number }> = ({
 );
 
 const Actions: FC = () => {
-  const { values, setFieldValue } = useFormikContext<FormValues>();
+  const {
+    values: { input, saving },
+    setFieldValue,
+  } = useFormikContext<FormValues>();
 
   const handleSave = () => {
-    setFieldValue('saving', !values.saving);
+    setFieldValue('saving', !saving);
   };
 
   const SaveButton = () => (
-    <Tooltip title={values.saving ? 'Cancel' : 'Save As'}>
+    <Tooltip title={saving ? 'Cancel' : 'Save As'}>
       <IconButton onPointerDown={handleSave}>
-        {values.saving ? <Cancel /> : <SaveAsRounded />}
+        {saving ? <Cancel /> : <SaveAsRounded />}
       </IconButton>
     </Tooltip>
   );
 
   return (
     <Stack direction='row'>
-      <CopyButton copyValue={values.input} />
+      <CopyButton copyValue={input} />
       <SaveButton />
     </Stack>
   );
@@ -50,8 +53,14 @@ type FormValues = {
 };
 
 const Alias: FC = () => {
-  const { values, errors, touched, handleChange, handleBlur, submitForm } =
-    useFormikContext<FormValues>();
+  const {
+    values: { alias },
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    submitForm,
+  } = useFormikContext<FormValues>();
 
   return (
     <Stack
@@ -66,7 +75,7 @@ const Alias: FC = () => {
         name='alias'
         label='Alias'
         placeholder='Enter alias ...'
-        value={values.alias}
+        value={alias}
         onChange={handleChange}
         onBlur={handleBlur}
         error={touched.alias && !!errors.alias}
@@ -130,8 +139,16 @@ const Input: FC = () => {
     },
   });
 
-  const inputCharacterCountValue = useCharacterCount(formik.values.input);
-  const inputByteCountValue = useByteCount(formik.values.input);
+  const {
+    values: { input, saving },
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+  } = formik;
+
+  const inputCharacterCountValue = useCharacterCount(input);
+  const inputByteCountValue = useByteCount(input);
 
   return (
     <FormikProvider value={formik}>
@@ -141,11 +158,11 @@ const Input: FC = () => {
             id='input'
             name='input'
             placeholder='Enter string ...'
-            value={formik.values.input}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.input && !!formik.errors.input}
-            helperText={formik.touched.input && formik.errors.input}
+            value={input}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.input && !!errors.input}
+            helperText={touched.input && errors.input}
             multiline
             maxRows={4}
             sx={{ width: '100%' }}
@@ -163,7 +180,7 @@ const Input: FC = () => {
             />
             <Actions />
           </Stack>
-          {formik.values.saving && <Alias />}
+          {saving && <Alias />}
         </Stack>
       </form>
     </FormikProvider>
