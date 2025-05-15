@@ -1,12 +1,14 @@
 import browser from 'webextension-polyfill';
 import { IconButton, Stack, TextField, Typography } from '@mui/material';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import useCharacterCount from './useCharacterCount';
 import useByteCount from './useByteCount';
 import { CopyButton, Tooltip, EntityObjectType } from '../shared';
 import { Cancel, SaveAsRounded, SaveRounded } from '@mui/icons-material';
 import { v4 as uuidv4 } from 'uuid';
 import { store, addItem } from '../../redux';
+import { FormikProvider, useFormik, useFormikContext } from 'formik';
+import * as yup from 'yup';
 
 const InputValues: FC<{ characterCount: number; byteCount: number }> = ({
   characterCount,
@@ -18,36 +20,38 @@ const InputValues: FC<{ characterCount: number; byteCount: number }> = ({
   </Stack>
 );
 
-const Actions: FC<{
-  inputValue: string;
-  isSaving: boolean;
-  setIsSaving: (isSaving: boolean) => void;
-}> = ({ inputValue, isSaving, setIsSaving }) => {
+const Actions: FC = () => {
+  const { values, setFieldValue } = useFormikContext<FormValues>();
+
   const handleSave = () => {
-    setIsSaving(!isSaving);
+    setFieldValue('saving', !values.saving);
   };
 
   const SaveButton = () => (
-    <Tooltip title={isSaving ? 'Cancel' : 'Save As'}>
-      <IconButton onClick={handleSave}>
-        {isSaving ? <Cancel /> : <SaveAsRounded />}
+    <Tooltip title={values.saving ? 'Cancel' : 'Save As'}>
+      <IconButton onPointerDown={handleSave}>
+        {values.saving ? <Cancel /> : <SaveAsRounded />}
       </IconButton>
     </Tooltip>
   );
 
   return (
     <Stack direction='row'>
-      <CopyButton copyValue={inputValue} />
+      <CopyButton copyValue={values.input} />
       <SaveButton />
     </Stack>
   );
 };
 
-const Alias: FC<{
-  defaultValue: string;
-  handleSave: (value: string) => void;
-}> = ({ defaultValue, handleSave }) => {
-  const [aliasValue, setAliasValue] = useState<string>(defaultValue);
+type FormValues = {
+  input: string;
+  alias: string;
+  saving: boolean;
+};
+
+const Alias: FC = () => {
+  const { values, errors, touched, handleChange, handleBlur, submitForm } =
+    useFormikContext<FormValues>();
 
   return (
     <Stack
@@ -58,17 +62,21 @@ const Alias: FC<{
       gap='0.5rem'
     >
       <TextField
+        id='alias'
+        name='alias'
         label='Alias'
         placeholder='Enter alias ...'
+        value={values.alias}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        error={touched.alias && !!errors.alias}
+        helperText={touched.alias && errors.alias}
         multiline
         maxRows={4}
-        defaultValue={defaultValue}
-        value={aliasValue}
-        onChange={(e) => setAliasValue(e.target.value)}
         slotProps={{ htmlInput: { maxLength: 25 } }}
       />
       <Tooltip title='Save'>
-        <IconButton onClick={() => handleSave(aliasValue)} size='medium'>
+        <IconButton onClick={submitForm} size='medium'>
           <SaveRounded />
         </IconButton>
       </Tooltip>
@@ -85,68 +93,80 @@ const generateUniqueId = async (attempt: number = 0): Promise<string> => {
   return id;
 };
 
+const validationSchema = yup.object({
+  input: yup.string().required(),
+  alias: yup.string().required(),
+});
+
 const Input: FC = () => {
-  const [inputValue, setInputValue] = useState<string>('');
-  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const formik = useFormik({
+    initialValues: {
+      input: '',
+      alias: '',
+      saving: false,
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values: FormValues, { resetForm }) => {
+      try {
+        const valueObject: EntityObjectType = {
+          alias: values.alias,
+          value: values.input,
+          characterCount: inputCharacterCountValue,
+          byteCount: inputByteCountValue,
+        };
 
-  const inputCharacterCountValue = useCharacterCount(inputValue);
-  const inputByteCountValue = useByteCount(inputValue);
+        const id = await generateUniqueId();
 
-  const handleSave = async (alias: string) => {
-    try {
-      const valueObject: EntityObjectType = {
-        alias: alias,
-        value: inputValue,
-        characterCount: inputCharacterCountValue,
-        byteCount: inputByteCountValue,
-      };
+        console.log('saved', id, valueObject);
 
-      const id = await generateUniqueId();
+        store.dispatch(addItem({ key: id, value: valueObject }));
 
-      console.log('saved', id, valueObject);
+        formik.setFieldValue('saving', false);
+        // setIsSaving(false);
+        resetForm();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  });
 
-      store.dispatch(addItem({ key: id, value: valueObject }));
-
-      setIsSaving(false);
-      setInputValue('');
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const inputCharacterCountValue = useCharacterCount(formik.values.input);
+  const inputByteCountValue = useByteCount(formik.values.input);
 
   return (
-    <>
-      <Stack direction='column' alignItems='center' gap='0.5rem'>
-        <TextField
-          multiline
-          maxRows={4}
-          sx={{ width: '100%' }}
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          placeholder='Enter string ...'
-          slotProps={{ htmlInput: { maxLength: 5000 } }}
-        />
-        <Stack
-          direction='row'
-          justifyContent='space-between'
-          alignItems='center'
-          width='100%'
-        >
-          <InputValues
-            characterCount={inputCharacterCountValue}
-            byteCount={inputByteCountValue}
+    <FormikProvider value={formik}>
+      <form onSubmit={formik.handleSubmit}>
+        <Stack direction='column' alignItems='center' gap='0.5rem'>
+          <TextField
+            id='input'
+            name='input'
+            placeholder='Enter string ...'
+            value={formik.values.input}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.input && !!formik.errors.input}
+            helperText={formik.touched.input && formik.errors.input}
+            multiline
+            maxRows={4}
+            sx={{ width: '100%' }}
+            slotProps={{ htmlInput: { maxLength: 5000 } }}
           />
-          <Actions
-            inputValue={inputValue}
-            isSaving={isSaving}
-            setIsSaving={setIsSaving}
-          />
+          <Stack
+            direction='row'
+            justifyContent='space-between'
+            alignItems='center'
+            width='100%'
+          >
+            <InputValues
+              characterCount={inputCharacterCountValue}
+              byteCount={inputByteCountValue}
+            />
+            <Actions />
+          </Stack>
+          {formik.values.saving && <Alias />}
         </Stack>
-        {isSaving && (
-          <Alias defaultValue={inputValue} handleSave={handleSave} />
-        )}
-      </Stack>
-    </>
+      </form>
+    </FormikProvider>
   );
 };
 
