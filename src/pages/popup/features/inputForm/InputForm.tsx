@@ -107,7 +107,7 @@ const validationSchema = yup.object({
   alias: yup.string().required(),
 });
 
-const Input: FC = () => {
+const InputForm: FC = () => {
   const formik = useFormik({
     initialValues: {
       input: '',
@@ -187,4 +187,4 @@ const Input: FC = () => {
   );
 };
 
-export default Input;
+export default InputForm;
