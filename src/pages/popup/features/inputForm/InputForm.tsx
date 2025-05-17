@@ -85,7 +85,11 @@ const Alias: FC = () => {
         slotProps={{ htmlInput: { maxLength: 25 } }}
       />
       <Tooltip title='Save'>
-        <IconButton onClick={submitForm} size='medium'>
+        <IconButton
+          onClick={submitForm}
+          size='medium'
+          disabled={!!errors.alias}
+        >
           <SaveRounded />
         </IconButton>
       </Tooltip>
