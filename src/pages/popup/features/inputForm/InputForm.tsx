@@ -64,7 +64,6 @@ const Alias: FC = () => {
     touched,
     handleChange,
     handleBlur,
-    submitForm,
   } = useFormikContext<FormValues>();
 
   return (
@@ -88,11 +87,7 @@ const Alias: FC = () => {
         slotProps={{ htmlInput: { maxLength: 25 } }}
       />
       <Tooltip title='Save'>
-        <IconButton
-          onClick={submitForm}
-          size='medium'
-          disabled={!!errors.alias}
-        >
+        <IconButton type='submit' size='medium' disabled={!!errors.alias}>
           <SaveRounded />
         </IconButton>
       </Tooltip>
