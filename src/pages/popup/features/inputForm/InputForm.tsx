@@ -24,6 +24,8 @@ const Actions: FC = () => {
   const {
     values: { input, saving },
     setFieldValue,
+    errors,
+    touched,
   } = useFormikContext<FormValues>();
 
   const handleSave = () => {
@@ -32,7 +34,10 @@ const Actions: FC = () => {
 
   const SaveButton = () => (
     <Tooltip title={saving ? 'Cancel' : 'Save As'}>
-      <IconButton onPointerDown={handleSave}>
+      <IconButton
+        onPointerDown={handleSave}
+        disabled={!!errors.input || !touched.input}
+      >
         {saving ? <Cancel /> : <SaveAsRounded />}
       </IconButton>
     </Tooltip>
