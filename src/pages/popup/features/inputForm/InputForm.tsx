@@ -85,8 +85,6 @@ const Alias: FC = () => {
         onBlur={handleBlur}
         error={touched.alias && !!errors.alias}
         helperText={touched.alias && errors.alias}
-        multiline
-        maxRows={4}
         slotProps={{ htmlInput: { maxLength: 25 } }}
       />
       <Tooltip title='Save'>
