@@ -59,7 +59,7 @@ type FormValues = {
 
 const Alias: FC = () => {
   const {
-    values: { input, alias },
+    values: { input, alias, saving },
     errors,
     touched,
     handleChange,
@@ -72,7 +72,7 @@ const Alias: FC = () => {
   useEffect(() => {
     aliasRef.current?.focus();
     setFieldValue('alias', input.slice(0, 25));
-  }, []);
+  }, [saving]);
 
   return (
     <Stack
