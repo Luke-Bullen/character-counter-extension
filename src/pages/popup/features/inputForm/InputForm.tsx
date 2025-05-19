@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 import { IconButton, Stack, TextField, Typography } from '@mui/material';
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import useCharacterCount from './useCharacterCount';
 import useByteCount from './useByteCount';
 import { CopyButton, Tooltip, EntityObjectType } from '../shared';
@@ -66,6 +66,12 @@ const Alias: FC = () => {
     handleBlur,
   } = useFormikContext<FormValues>();
 
+  const aliasRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    aliasRef.current?.focus();
+  }, []);
+
   return (
     <Stack
       direction='row'
@@ -85,6 +91,7 @@ const Alias: FC = () => {
         error={touched.alias && !!errors.alias}
         helperText={touched.alias && errors.alias}
         slotProps={{ htmlInput: { maxLength: 25 } }}
+        inputRef={aliasRef}
       />
       <Tooltip title='Save'>
         <IconButton type='submit' size='medium' disabled={!!errors.alias}>
