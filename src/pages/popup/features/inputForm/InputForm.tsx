@@ -116,8 +116,8 @@ const generateUniqueId = async (attempt: number = 0): Promise<string> => {
 };
 
 const validationSchema = yup.object({
-  input: yup.string().required(),
-  alias: yup.string().required(),
+  input: yup.string().required().max(5000),
+  alias: yup.string().required().max(25),
 });
 
 const InputForm: FC = () => {
