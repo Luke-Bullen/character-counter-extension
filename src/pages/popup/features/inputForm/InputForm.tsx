@@ -94,7 +94,11 @@ const Alias: FC = () => {
         inputRef={aliasRef}
       />
       <Tooltip title='Save'>
-        <IconButton type='submit' size='medium' disabled={!!errors.alias}>
+        <IconButton
+          type='submit'
+          size='medium'
+          disabled={!!errors.alias || !!errors.input}
+        >
           <SaveRounded />
         </IconButton>
       </Tooltip>
