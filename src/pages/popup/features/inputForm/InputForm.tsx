@@ -36,7 +36,7 @@ const Actions: FC = () => {
     <Tooltip title={saving ? 'Cancel' : 'Save As'}>
       <IconButton
         onClick={handleSave}
-        disabled={!!errors.input || !touched.input}
+        disabled={!saving && (!!errors.input || !touched.input)}
       >
         {saving ? <Cancel /> : <SaveAsRounded />}
       </IconButton>
