@@ -59,17 +59,19 @@ type FormValues = {
 
 const Alias: FC = () => {
   const {
-    values: { alias },
+    values: { input, alias },
     errors,
     touched,
     handleChange,
     handleBlur,
+    setFieldValue,
   } = useFormikContext<FormValues>();
 
   const aliasRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     aliasRef.current?.focus();
+    setFieldValue('alias', input.slice(0, 25));
   }, []);
 
   return (
