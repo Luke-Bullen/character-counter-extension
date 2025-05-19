@@ -143,8 +143,6 @@ const InputForm: FC = () => {
 
         store.dispatch(addItem({ key: id, value: valueObject }));
 
-        formik.setFieldValue('saving', false);
-        // setIsSaving(false);
         resetForm();
       } catch (error) {
         console.error(error);
