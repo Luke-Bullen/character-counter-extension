@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import { IconButton, Stack, TextField, Typography } from '@mui/material';
+import { IconButton, Stack, TextField } from '@mui/material';
 import { FC, useEffect, useRef } from 'react';
 import useCharacterCount from './useCharacterCount';
 import useByteCount from './useByteCount';
@@ -9,16 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { store, addItem } from '../../redux';
 import { FormikProvider, useFormik, useFormikContext } from 'formik';
 import * as yup from 'yup';
-
-const InputValues: FC<{ characterCount: number; byteCount: number }> = ({
-  characterCount,
-  byteCount,
-}) => (
-  <Stack direction='column' alignItems='flex-end'>
-    <Typography variant='body1'>Characters: {characterCount}</Typography>
-    <Typography variant='body1'>Bytes: {byteCount}</Typography>
-  </Stack>
-);
+import InputValues from './InputValues';
 
 const Actions: FC = () => {
   const {
