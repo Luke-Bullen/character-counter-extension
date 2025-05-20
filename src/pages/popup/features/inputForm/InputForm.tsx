@@ -1,102 +1,21 @@
 import browser from 'webextension-polyfill';
-import { IconButton, Stack, TextField } from '@mui/material';
-import { FC, useEffect, useRef } from 'react';
+import { FC } from 'react';
+import { Stack, TextField } from '@mui/material';
 import useCharacterCount from './useCharacterCount';
 import useByteCount from './useByteCount';
-import { CopyButton, Tooltip, EntityObjectType } from '../shared';
-import { Cancel, SaveAsRounded, SaveRounded } from '@mui/icons-material';
+import { EntityObjectType } from '../shared';
 import { v4 as uuidv4 } from 'uuid';
 import { store, addItem } from '../../redux';
-import { FormikProvider, useFormik, useFormikContext } from 'formik';
+import { FormikProvider, useFormik } from 'formik';
 import * as yup from 'yup';
 import InputValues from './InputValues';
+import Alias from './Alias';
+import Actions from './Actions';
 
-const Actions: FC = () => {
-  const {
-    values: { input, saving },
-    setFieldValue,
-    errors,
-    touched,
-  } = useFormikContext<FormValues>();
-
-  const handleSave = () => {
-    setFieldValue('saving', !saving);
-  };
-
-  const SaveButton = () => (
-    <Tooltip title={saving ? 'Cancel' : 'Save As'}>
-      <IconButton
-        onClick={handleSave}
-        disabled={!saving && (!!errors.input || !touched.input)}
-      >
-        {saving ? <Cancel /> : <SaveAsRounded />}
-      </IconButton>
-    </Tooltip>
-  );
-
-  return (
-    <Stack direction='row'>
-      <CopyButton copyValue={input} />
-      <SaveButton />
-    </Stack>
-  );
-};
-
-type FormValues = {
+export type FormValues = {
   input: string;
   alias: string;
   saving: boolean;
-};
-
-const Alias: FC = () => {
-  const {
-    values: { input, alias, saving },
-    errors,
-    touched,
-    handleChange,
-    handleBlur,
-    setFieldValue,
-  } = useFormikContext<FormValues>();
-
-  const aliasRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    aliasRef.current?.focus();
-    setFieldValue('alias', input.slice(0, 25));
-  }, [saving]);
-
-  return (
-    <Stack
-      direction='row'
-      alignItems='center'
-      justifyContent='center'
-      p='0.5rem'
-      gap='0.5rem'
-    >
-      <TextField
-        id='alias'
-        name='alias'
-        label='Alias'
-        placeholder='Enter alias ...'
-        value={alias}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        error={touched.alias && !!errors.alias}
-        helperText={touched.alias && errors.alias}
-        slotProps={{ htmlInput: { maxLength: 25 } }}
-        inputRef={aliasRef}
-      />
-      <Tooltip title='Save'>
-        <IconButton
-          type='submit'
-          size='medium'
-          disabled={!!errors.alias || !!errors.input}
-        >
-          <SaveRounded />
-        </IconButton>
-      </Tooltip>
-    </Stack>
-  );
 };
 
 const generateUniqueId = async (attempt: number = 0): Promise<string> => {
