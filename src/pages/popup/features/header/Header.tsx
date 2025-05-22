@@ -1,11 +1,12 @@
-import { Stack, Typography } from '@mui/material';
+import { Stack, Switch, Typography } from '@mui/material';
 
 const Header = () => {
   return (
-    <Stack direction="row" justifyContent="space-between" alignItems="center">
-      <Typography variant="h5" color="black">
+    <Stack direction='row' justifyContent='space-between' alignItems='center'>
+      <Typography variant='h5' color='black'>
         Character Counter
       </Typography>
+      <Switch />
     </Stack>
   );
 };
