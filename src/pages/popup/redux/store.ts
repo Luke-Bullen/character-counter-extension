@@ -12,12 +12,12 @@ const store = configureStore({
 
 const setup = async () => {
   const {
-    order,
+    listOrder,
     darkTheme,
     ...rest
-  }: { order?: string[]; darkTheme?: boolean } =
+  }: { listOrder?: string[]; darkTheme?: boolean } =
     await browser.storage.local.get(null);
-  if (order) store.dispatch(setOrder(order));
+  if (listOrder) store.dispatch(setOrder(listOrder));
   if (darkTheme) store.dispatch(setTheme(darkTheme));
   store.dispatch(setSavedEntries(rest));
 };
@@ -30,7 +30,7 @@ store.subscribe(async () => {
     theme: { darkTheme },
   } = store.getState();
 
-  await browser.storage.local.set({ order: listOrder });
+  await browser.storage.local.set({ listOrder });
 
   await browser.storage.local.set(savedEntries);
 
