@@ -1,8 +1,8 @@
 import { Switch } from '@mui/material';
 import { store, switchTheme } from '../../redux';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 
-const ThemeSwitch = () => {
+const ThemeSwitch: FC = () => {
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(
     store.getState().theme.darkTheme,
   );
