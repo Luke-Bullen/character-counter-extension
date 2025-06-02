@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header, InputForm, SavedList } from './features';
-import { Stack } from '@mui/material';
+import { Stack, ThemeProvider } from '@mui/material';
+import { store } from './redux';
+import { darkTheme, lightTheme } from './features/shared';
 
 export default function Popup() {
+  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false);
+
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      setIsDarkTheme(store.getState().theme.darkTheme);
+    });
+    return unsubscribe;
+  }, []);
+
   return (
-    <Stack p='1rem' width='100%' height='100%' gap='0.5rem'>
-      <Header />
-      <InputForm />
-      <SavedList />
-    </Stack>
+    <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
+      <Stack p='1rem' width='100%' height='100%' gap='0.5rem'>
+        <Header />
+        <InputForm />
+        <SavedList />
+      </Stack>
+    </ThemeProvider>
   );
 }
