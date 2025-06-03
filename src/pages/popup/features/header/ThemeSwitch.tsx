@@ -1,4 +1,4 @@
-import { Switch } from '@mui/material';
+import { Switch, useColorScheme } from '@mui/material';
 import { store, switchTheme } from '../../redux';
 import { FC, useState } from 'react';
 
@@ -6,6 +6,8 @@ const ThemeSwitch: FC = () => {
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(
     store.getState().theme.darkTheme,
   );
+    
+    const { mode, setMode } = useColorScheme()
 
   const handleClick = () => {
     store.dispatch(switchTheme());
