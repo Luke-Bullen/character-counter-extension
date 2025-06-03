@@ -1,4 +1,4 @@
 export { default as CopyButton } from './CopyButton';
 export { default as Tooltip } from './Tooltip';
 export { EntityObjectType } from './types';
-export { lightTheme, darkTheme } from './themes';
+export { lightTheme, darkTheme, theme } from './themes';

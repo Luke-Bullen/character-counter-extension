@@ -7,3 +7,9 @@ export const darkTheme = createTheme({
     mode: 'dark',
   },
 });
+
+export const theme = createTheme({
+  colorSchemes: {
+    dark: true,
+  },
+});
